@@ -1,9 +1,16 @@
 import "./App.css";
+import ProductCard from "./components/ProductCard";
 
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold underkie  m-5">Hello world!</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xlg:grid-cols-3  m-5 gap-3 p-2 rounded-md text-sm">
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+      </div>
     </>
   );
 }
