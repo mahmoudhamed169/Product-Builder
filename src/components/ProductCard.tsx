@@ -1,15 +1,19 @@
 import productOne from "../assets/imges/photo-1505740420928-5e560c06d30e.jpg";
+import { IProduct } from "../interfaces";
+import { txtSlicer } from "../Utils/functions";
 import Image from "./Image";
 import Button from "./UI/Button";
-export default function ProductCard() {
+
+interface IProps {
+  product: IProduct;
+}
+export default function ProductCard({ product }: IProps) {
+  const { title, description, imageURL, price } = product;
   return (
     <div className="border rounded-md p-2  flex  flex-col">
-      <Image imgURL={productOne} alt="produvt Name" className="rounded-md" />
-      <h2>HeadPhone</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam labore
-        amet culpa sit aliquid eos.
-      </p>
+      <Image imgURL={imageURL} alt="produvt Name" className="rounded-md" />
+      <h2>{title}</h2>
+      <p>{txtSlicer(description)}</p>
       <div className="flex  items-center my-5 space-x-1">
         <span className="w-5 h-5 bg-emerald-600 rounded-full  "></span>
         <span className="w-5 h-5 bg-red-600 rounded-full "></span>
@@ -17,7 +21,7 @@ export default function ProductCard() {
       </div>
 
       <div className="flex items-center justify-between">
-        <span>$500,000</span>
+        <span>{price}</span>
         <img
           src={productOne}
           className="w-10 h-10 rounded-full object-cover"
@@ -29,7 +33,7 @@ export default function ProductCard() {
         <Button className="bg-indigo-700 " width="w-full">
           EDIT
         </Button>
-        <Button className="bg-red-700 " width="w-fit">
+        <Button className="bg-red-700 " width="w-full">
           EDIT
         </Button>
       </div>
