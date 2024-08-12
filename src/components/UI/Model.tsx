@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { ReactNode, useState } from "react";
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { ReactNode, useEffect } from "react";
 
 interface IProps {
   isOpen: boolean;
@@ -9,33 +9,37 @@ interface IProps {
 }
 
 export default function Modal({ isOpen, closeModel, title, children }: IProps) {
-  return (
-    <>
-      <Dialog
-        open={isOpen}
-        as="div"
-        className="relative z-10 focus:outline-none"
-        onClose={close}
-        __demoMode
-      >
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4">
-            <DialogPanel
-              transition
-              className="w-full max-w-md rounded-xl bg-white p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
-            >
-              <DialogTitle
-                as="h3"
-                className="text-base/7 font-medium text-black"
-              >
-                {title}
-              </DialogTitle>
+  // Prevent background scrolling when the modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
 
-              <div className="mt-4">{children}</div>
-            </DialogPanel>
-          </div>
+    // Clean up the class on unmount
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [isOpen]);
+
+  return (
+    <Dialog
+      open={isOpen}
+      as="div"
+      className="relative z-10 focus:outline-none"
+      onClose={closeModel} // make sure to close the modal with the correct handler
+    >
+      <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black bg-opacity-50">
+        <div className="flex min-h-full items-center justify-center p-4">
+          <DialogPanel className="w-full max-w-md rounded-xl bg-white p-6 backdrop-blur-2xl transition-all duration-300 ease-out">
+            <DialogTitle as="h3" className="text-lg font-medium text-black">
+              {title}
+            </DialogTitle>
+            <div className="mt-4">{children}</div>
+          </DialogPanel>
         </div>
-      </Dialog>
-    </>
+      </div>
+    </Dialog>
   );
 }

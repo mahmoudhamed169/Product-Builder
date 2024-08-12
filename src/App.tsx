@@ -2,8 +2,9 @@ import { useState } from "react";
 import "./App.css";
 import ProductCard from "./components/ProductCard";
 import Modal from "./components/UI/Model";
-import { productList } from "./data";
+import { formInputsList, productList } from "./data";
 import Button from "./components/UI/Button";
+import Input from "./components/UI/Input";
 
 function App() {
   /*._______ State _________..*/
@@ -22,6 +23,16 @@ function App() {
   const rederProductList = productList.map((product) => (
     <ProductCard key={product.id} product={product} />
   ));
+
+  const renderFormList = formInputsList.map((input) => (
+    <div className="flex flex-col ">
+      <label htmlFor="" className="mb-[2px] text-sm font-medium text-gray-700">
+        {input.label}
+      </label>
+      <Input />
+    </div>
+  ));
+
   return (
     <main className="container mx-auto">
       <Button className="bg-indigo-700 " width="w-fit" onClick={open}>
@@ -31,14 +42,17 @@ function App() {
         {rederProductList}
       </div>
       <Modal isOpen={isOpen} title="Add Product" closeModel={close}>
-        <div className="flex items-center space-x-2">
-          <Button className="bg-indigo-700 " width="w-full">
-            Submit
-          </Button>
-          <Button className="bg-red-700 " width="w-full">
-            Cancel
-          </Button>
-        </div>
+        <form className="space-y-3">
+          {renderFormList}
+          <div className="flex items-center space-x-2">
+            <Button className="bg-indigo-700 " width="w-full">
+              Submit
+            </Button>
+            <Button className="bg-red-700 " width="w-full" onClick={close}>
+              Cancel
+            </Button>
+          </div>
+        </form>
       </Modal>
     </main>
   );
