@@ -5,5 +5,5 @@ interface IProps {
 }
 
 export default function Image({ imgURL, alt, className }: IProps) {
-  return <img src={imgURL} alt={alt} className="className" />;
+  return <img src={imgURL} alt={alt} className={className} />;
 }
